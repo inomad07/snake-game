@@ -1,0 +1,15 @@
+.grid-container {
+    display: inline-grid;
+}
+
+#game-board {
+    background-color: #D3D3D3;
+    width: 65vmin;
+    height: 65vmin;
+    display: grid;
+    grid-template-rows: repeat(16, 1fr);
+    grid-template-columns: repeat(16, 1fr);
+    border: 2px solid #343a40;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

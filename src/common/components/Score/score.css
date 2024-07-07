@@ -1,0 +1,11 @@
+.score-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px;
+}
+
+.score, .best-score {
+    font-size: 20px;
+    color: #333;
+}

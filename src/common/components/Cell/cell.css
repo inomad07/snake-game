@@ -1,0 +1,4 @@
+.cell {
+    border: 1px solid #ced4da; /* Border for each cell */
+    box-sizing: border-box;
+}
