@@ -1,4 +1,4 @@
-import "./snake.css"; // Create Result.css for styling
+import "./snake.css";
 
 export default function Result({ show, score, bestScore, onRestart }) {
     if (!show) {

@@ -1,7 +1,6 @@
-import React from 'react';
 import './score.css';
 
-const Score = ({ score, bestScore }) => {
+export default function Score({ score, bestScore }) {
     return (
         <div className="score-container">
             <div className="score">
@@ -12,6 +11,5 @@ const Score = ({ score, bestScore }) => {
             </div>
         </div>
     );
-};
+}
 
-export default Score;
