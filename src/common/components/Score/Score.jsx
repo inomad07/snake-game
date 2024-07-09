@@ -1,4 +1,5 @@
 import './score.css';
+import { BEST_SCORE } from '../../constants';
 
 export default function Score({ score, bestScore }) {
     return (
@@ -7,7 +8,7 @@ export default function Score({ score, bestScore }) {
                 <h2>Score: {score}</h2>
             </div>
             <div className="best-score">
-                <h2>Best Score: {bestScore}</h2>
+                <h2>{BEST_SCORE}{bestScore}</h2>
             </div>
         </div>
     );

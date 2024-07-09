@@ -7,7 +7,7 @@ import Score from "../../../common/components/Score";
 import { getInputDirection } from "../../utils/keyControls";
 import { generateRandomPosition, outsideGrid } from "../../utils/gridEngine";
 import { hasEatenFood } from '../../utils/snakeEngine';
-import { SNAKE_SPEED, SNAKE_BODY, GRID_SIZE } from "../../../common/constants";
+import { SNAKE_SPEED, SNAKE_BODY, GRID_SIZE, INITIAL_DIRECTION } from "../../../common/constants";
 import "./gameBoard.css";
 
 const GameBoard = () => {
@@ -20,7 +20,7 @@ const GameBoard = () => {
     );
     const [showStartModal, setShowStartModal] = useState(true);
     const [gameStarted, setGameStarted] = useState(false);
-    const [direction, setDirection] = useState({ x: 1, y: 0 }); // Initial direction
+    const [direction, setDirection] = useState(INITIAL_DIRECTION);
 
     const gameBoardRef = useRef(null);
 
@@ -97,12 +97,12 @@ const GameBoard = () => {
 
     const restartGame = () => {
         setSnakeBody(SNAKE_BODY);
-        setFoodPosition(generateRandomPosition(GRID_SIZE)); // Ensure foodPosition is updated immediately
+        setFoodPosition(generateRandomPosition(GRID_SIZE));
         setScore(0);
         setGameOver(false);
         setGameStarted(true);
         setShowStartModal(false);
-        setDirection({ x: 1, y: 0 }); // Reset initial direction
+        setDirection(INITIAL_DIRECTION);
     };
 
     const startGame = () => {
@@ -120,7 +120,7 @@ const GameBoard = () => {
                     ref={gameBoardRef}
                     className={gameOver ? "game-over" : ""}
                     tabIndex={0}
-                    onKeyDown={handleKeyDown} // Attach keydown event listener to the game board div
+                    onKeyDown={handleKeyDown}
                 >
                     {gameStarted && <Snake snakeBody={snakeBody} />}
                     {gameStarted && <Food foodPosition={foodPosition} />}
