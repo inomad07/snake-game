@@ -1,4 +1,4 @@
-Snake Game app was created via Vite.
+Snake Game app was bootstrapped with Vite.
 
 ## Available Scripts
 
