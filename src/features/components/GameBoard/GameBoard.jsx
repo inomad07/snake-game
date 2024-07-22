@@ -40,7 +40,7 @@ const GameBoard = () => {
     useEffect(() => {
         if (gameStarted && !gameOver) {
             const interval = setInterval(() => {
-                updateSnake();
+                updateSnakeBody();
                 checkCollision();
             }, SNAKE_SPEED);
 
@@ -48,25 +48,29 @@ const GameBoard = () => {
         }
     }, [snakeBody, gameOver, gameStarted]);
 
-    const updateSnake = () => {
+    const updateSnakeBody = () => {
         const { x: headX, y: headY } = snakeBody[snakeBody.length - 1];
         const newHead = {
             x: headX + direction.x,
             y: headY + direction.y,
         };
 
-        const newSnake = [...snakeBody];
-        newSnake.push(newHead);
+        const newSnakeBody = updateSnakeSegments(newHead)
 
-        if (hasEatenFood(newHead, foodPosition)) {
-            setFoodPosition(generateRandomPosition(GRID_SIZE));
-            setScore((prevScore) => prevScore + 1);
-        } else {
-            newSnake.shift();
-        }
-
-        setSnakeBody(newSnake);
+        setSnakeBody(newSnakeBody);
     };
+
+    const updateSnakeSegments = (newHead) => {
+        return hasEatenFood(newHead, foodPosition)
+        ? updateFoodScore(newHead) 
+        : [...snakeBody.slice(1), newHead]; 
+    }
+
+    const updateFoodScore = (newHead) => {
+        setFoodPosition(generateRandomPosition(GRID_SIZE));
+        setScore(prevScore => prevScore + 1);
+        return [...snakeBody, newHead]
+    }
 
     const checkCollision = () => {
         const head = snakeBody[snakeBody.length - 1];
