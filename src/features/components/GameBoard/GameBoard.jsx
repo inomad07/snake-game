@@ -6,13 +6,20 @@ import StartModal from "../../../common/components/StartModal";
 import Score from "../../../common/components/Score";
 import { getInputDirection } from "../../utils/keyControls";
 import { generateRandomPosition, outsideGrid } from "../../utils/gridEngine";
-import { hasEatenFood } from '../../utils/snakeEngine';
-import { SNAKE_SPEED, SNAKE_BODY, GRID_SIZE, INITIAL_DIRECTION } from "../../../common/constants";
+import { hasEatenFood } from "../../utils/snakeEngine";
+import {
+    SNAKE_SPEED,
+    SNAKE_BODY,
+    GRID_SIZE,
+    INITIAL_DIRECTION
+} from "../../../common/constants";
 import "./gameBoard.css";
 
 const GameBoard = () => {
     const [snakeBody, setSnakeBody] = useState(SNAKE_BODY);
-    const [foodPosition, setFoodPosition] = useState(generateRandomPosition(GRID_SIZE));
+    const [foodPosition, setFoodPosition] = useState(
+        generateRandomPosition(GRID_SIZE)
+    );
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
     const [bestScore, setBestScore] = useState(
@@ -23,13 +30,8 @@ const GameBoard = () => {
     const [direction, setDirection] = useState(INITIAL_DIRECTION);
 
     const gameBoardRef = useRef(null);
-
-    const handleKeyDown = (event) => {
-        const newDirection = getInputDirection(event.key);
-        if (newDirection) {
-            setDirection(newDirection);
-        }
-    };
+    const requestRef = useRef();
+    const lastRenderTimeRef = useRef(0);
 
     useEffect(() => {
         if (gameBoardRef.current) {
@@ -39,33 +41,55 @@ const GameBoard = () => {
 
     useEffect(() => {
         if (gameStarted && !gameOver) {
-            const interval = setInterval(() => {
-                updateSnake();
-                checkCollision();
-            }, SNAKE_SPEED);
-
-            return () => clearInterval(interval);
+            requestRef.current = requestAnimationFrame(gameLoop);
+            return () => cancelAnimationFrame(requestRef.current);
         }
     }, [snakeBody, gameOver, gameStarted]);
 
-    const updateSnake = () => {
+    const gameLoop = (currentTime) => {
+        const deltaTime = currentTime - lastRenderTimeRef.current;
+
+        if (deltaTime < SNAKE_SPEED) {
+            requestRef.current = requestAnimationFrame(gameLoop);
+            return;
+        }
+
+        lastRenderTimeRef.current = currentTime;
+        updateSnakeBody();
+        checkCollision();
+
+        requestRef.current = requestAnimationFrame(gameLoop);
+    };
+
+    const handleKeyDown = (event) => {
+        const newDirection = getInputDirection(event.key);
+        if (newDirection) {
+            setDirection(newDirection);
+        }
+    };
+
+    const updateSnakeBody = () => {
         const { x: headX, y: headY } = snakeBody[snakeBody.length - 1];
         const newHead = {
             x: headX + direction.x,
             y: headY + direction.y,
         };
 
-        const newSnake = [...snakeBody];
-        newSnake.push(newHead);
+        const newSnakeBody = updateSnakeSegments(newHead);
 
-        if (hasEatenFood(newHead, foodPosition)) {
-            setFoodPosition(generateRandomPosition(GRID_SIZE));
-            setScore((prevScore) => prevScore + 1);
-        } else {
-            newSnake.shift();
-        }
+        setSnakeBody(newSnakeBody);
+    };
 
-        setSnakeBody(newSnake);
+    const updateSnakeSegments = (newHead) => {
+        return hasEatenFood(newHead, foodPosition)
+            ? updateFoodScore(newHead)
+            : [...snakeBody.slice(1), newHead];
+    };
+
+    const updateFoodScore = (newHead) => {
+        setFoodPosition(generateRandomPosition(GRID_SIZE));
+        setScore((prevScore) => prevScore + 1);
+        return [...snakeBody, newHead];
     };
 
     const checkCollision = () => {
