@@ -1,7 +1,8 @@
-import './score.css';
+import './style.css';
 import { BEST_SCORE } from '../../constants';
+import { ScoreProps } from '../../types';
 
-export default function Score({ score, bestScore }) {
+export default function Score({ score, bestScore }: ScoreProps) {
     return (
         <div className="score-container">
             <div className="score">

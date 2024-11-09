@@ -1,6 +1,7 @@
-import './food.css'
+import { FoodProps } from '../../types';
+import './style.css'
 
-export default function Food({ foodPosition }) {
+export default function Food({ foodPosition }: FoodProps ) {
     return (
         <div
             style={{

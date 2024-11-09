@@ -1,4 +1,6 @@
-export function getInputDirection(key) {
+import { DirectionMap } from "../../common/types";
+
+export function getInputDirection(key: string) {
     const directionMap = {
         ArrowUp: { x: 0, y: -1 },
         ArrowDown: { x: 0, y: 1 },
@@ -6,6 +8,6 @@ export function getInputDirection(key) {
         ArrowRight: { x: 1, y: 0 },
     };
 
-    return directionMap[key] || null;
+    return directionMap[key as keyof DirectionMap] || null;
 }
 

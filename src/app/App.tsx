@@ -1,6 +1,6 @@
-import GameBoard from "../features/components/GameBoard";
-import { SNAKE_GAME } from "../common/constants";
-import "./App.css";
+import GameBoard from '../features/components/GameBoard';
+import { SNAKE_GAME } from '../common/constants';
+import "./style.css";
 
 export default function App() {
     return (
