@@ -1,7 +1,9 @@
-import "./snake.css";
+import './style.css';
 import { PLAY_AGAIN, GAME_OVER, YOUR_SCORE, BEST_SCORE } from '../../constants'
+import { ResultProps } from '../../types';
 
-export default function Result({ show, score, bestScore, onRestart }) {
+
+export default function Result({ show, score, bestScore, onRestart }: ResultProps) {
     if (!show) {
         return null;
     }

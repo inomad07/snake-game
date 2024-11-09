@@ -1,7 +1,8 @@
-import "./startModal.css";
-import { SNAKE_GAME, PRESS_START, START_GAME } from "../../constants";
+import "./style.css";
+import { SNAKE_GAME, PRESS_START, START_GAME } from '../../constants';
+import { StartModalProps } from "../../types";
 
-export default function StartModal({ show, onStart }) {
+export default function StartModal({ show, onStart }: StartModalProps) {
 	if (!show) {
 		return null;
 	}

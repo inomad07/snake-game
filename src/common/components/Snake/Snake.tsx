@@ -1,6 +1,7 @@
-import './snake.css'
+import { SnakeProps } from '../../types';
+import './style.css'
 
-export default function Snake({ snakeBody }) {
+export default function Snake({ snakeBody }: SnakeProps) {
     return (
         <>
             {snakeBody.map((segment, index) => (

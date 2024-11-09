@@ -10,6 +10,7 @@ export const GAME_OVER = 'Game Over!';
 export const YOUR_SCORE = 'Your Score: ';
 export const BEST_SCORE = 'Best Score: ';
 
+
 export const SNAKE_BODY = [
     { x: 8, y: 8 },
     { x: 9, y: 8 } // Initial snake size of 2 cells
